@@ -6,28 +6,47 @@
 
 vector<int> solution(string &S, vector<int> &P, vector<int> &Q) {
     // write your code in C++14 (g++ 6.2.0)
-    vector<int> Ans(P.size(),4);
-    int SValue=0;
-    for(unsigned int idx1=0;idx1<P.size();idx1++)
+    vector<int> Ans(P.size(),0);
+    vector<int> AcuNucRow(4,0);
+    vector<vector<int>> AcuNuc2D(S.size()+1,AcuNucRow);
+    vector<int>CurValue(4,0);
+    int CurAns = 0;
+    for(unsigned int idx1=0;idx1<S.size();idx1++)
     {
-        for(int idx2=P[idx1];idx2<=Q[idx1];idx2++)
-        {
-            switch(S[idx2])
+            CurValue.assign(4,0);
+            switch(S[idx1])
             {
              case 'A':
-             SValue=1;
+             CurValue[0]=1;
              break;
              case 'C':
-             SValue=2;
+             CurValue[1]=1;
              break;
              case 'G':
-             SValue=3;
+             CurValue[2]=1;
              break;  
              case 'T':
-             SValue=4;
+             CurValue[3]=1;
              break;               
             }
-            Ans[idx1]=min(Ans[idx1],SValue);
+            for(int idx2=0;idx2<4;idx2++)
+            {   
+                AcuNuc2D[idx1+1][idx2]=AcuNuc2D[idx1][idx2]+CurValue[idx2];
+            }
+    }
+    
+    for(unsigned int idx1=0;idx1<P.size();idx1++)
+    {
+
+        CurAns=0;
+        for(int idx2=0;idx2<4;idx2++)
+        {
+        CurAns++;            
+        if(AcuNuc2D[Q[idx1]+1][idx2]-AcuNuc2D[P[idx1]][idx2]>0)
+            {
+            Ans[idx1]=CurAns;
+            break;
+            }
         }
     }
     return Ans;
