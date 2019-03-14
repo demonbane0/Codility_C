@@ -7,9 +7,13 @@ int solution(vector<int> &A) {
     return 0;
     
     sort(A.begin(),A.end());
+    
+    long long sum=0;
     for (unsigned int idx=0;idx<A.size()-2;idx++)
     {
-        if((A[idx]>0)&&(A[idx]+A[idx+1]>A[idx+2]))
+        sum=(long long)A[idx]+(long long)A[idx+1];
+        
+        if((A[idx]>0)&&(sum>(long long)A[idx+2]))
         return 1;
     }
     return 0;
