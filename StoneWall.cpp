@@ -16,13 +16,21 @@ int solution(vector<int> &H) {
         }
         else if(H[idx]<height_stack.top())
         {
-         while((!height_stack.empty())&& (H[idx]<height_stack.top()))
+         while(!height_stack.empty())
          {
-             height_stack.pop();
              if(height_stack.top()==H[idx])
              {
                  height_stack.pop();
                  block_num--;
+                 break;
+             }
+             else if(H[idx]<height_stack.top())
+             {
+                 height_stack.pop();             
+             }
+             else
+             {
+                 break;
              }
          }
          height_stack.push(H[idx]);
